@@ -123,8 +123,8 @@ update :: proc() {
 	update_circular_buffer()
 
 	
-	if rl.IsKeyPressed(.UP) do emission_rate += 1
-	if rl.IsKeyPressed(.DOWN) do emission_rate -= 1
+	if rl.IsKeyPressed(.UP) { emission_rate += 1 }
+	if rl.IsKeyPressed(.DOWN) { emission_rate -= 1 }
 
 	
 	if rl.IsKeyPressed(.RIGHT) {
@@ -190,7 +190,7 @@ draw :: proc() {
 
 emit_particle :: proc() {
 	particle := add_to_circular_buffer()
-	if particle == nil do return
+	if particle == nil { return }
 
 
 	particle.position = emitter_position
@@ -221,7 +221,7 @@ emit_particle :: proc() {
 add_to_circular_buffer :: proc() -> ^Particle {
 	// Check if buffer is full
 	next_head := (cb.head + 1) % MAX_PARTICLES
-	if next_head == cb.tail do return nil
+	if next_head == cb.tail { return nil }
 
 	// Add new particle to the head position and advance head
 	particle := &cb.buffer[cb.head]
@@ -242,7 +242,7 @@ update_particles :: proc() {
 			p.position.x += p.velocity.x
 			p.velocity.y += 0.2 
 			p.position.y += p.velocity.y
-        // Smoke expands and fades
+		// Smoke expands and fades
 		case .SMOKE:
 			p.position.x += p.velocity.x
 			p.velocity.y -= 0.05 
